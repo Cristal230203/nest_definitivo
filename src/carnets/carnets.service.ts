@@ -9,23 +9,41 @@ export class CarnetsService {
     private prisma: PrismaService
   ) {}
 
-  create(createCarnetDto: CreateCarnetDto) {
-    return 'This action adds a new carnet';
+  create(Body:any) {
+    return this.prisma.carnets.create({
+      data:Body
+    })
   }
 
   findAll() {
-    return this.prisma.carnets.findMany()
+    return this.prisma.carnets.findMany({ 
+      orderBy:{id:'desc'}
+     })
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} carnet`;
+    return this.prisma.carnets.findFirst({
+      where:{id:id}
+
+    })
   }
 
-  update(id: number, updateCarnetDto: UpdateCarnetDto) {
-    return `This action updates a #${id} carnet`;
+  async update(id: number, 
+          Body: any) {
+    return await this.prisma.carnets.update({
+      where: {id:id},
+      data: Body
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} carnet`;
+  async remove(id: number) {
+    await this.prisma.carnets.delete({
+      where:{id:id}
+    })
+    return {
+      "exito" : true,
+      "mensaje": "Eliminado correctamente",
+      "id":id
+    }
   }
 }

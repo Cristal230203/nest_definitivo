@@ -8,8 +8,8 @@ export class CarnetsController {
   constructor(private readonly carnetsService: CarnetsService) {}
 
   @Post()
-  create(@Body() createCarnetDto: CreateCarnetDto) {
-    return this.carnetsService.create(createCarnetDto);
+  create(@Body() Body:any) {
+    return this.carnetsService.create (Body);
   }
 
   @Get()
@@ -23,8 +23,13 @@ export class CarnetsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCarnetDto: UpdateCarnetDto) {
-    return this.carnetsService.update(+id, updateCarnetDto);
+  update(@Param('id') id: string, @Body() Body:any) {
+    return {
+      "exito" : true,
+      "mensaje" : "Actualizado correctamente",
+      "id" : id,
+      "data" : this.carnetsService.update(+id, Body)
+    };
   }
 
   @Delete(':id')
