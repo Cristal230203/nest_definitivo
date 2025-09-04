@@ -17,7 +17,7 @@ export class CarnetsService {
 
   findAll() {
     return this.prisma.carnets.findMany({ 
-      orderBy:{id:'desc'}
+      orderBy:{id:'asc'}
      })
   }
 
