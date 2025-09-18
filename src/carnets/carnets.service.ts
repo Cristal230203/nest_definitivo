@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreateCarnetDto } from './dto/create-carnet.dto';
 import { UpdateCarnetDto } from './dto/update-carnet.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -9,10 +9,26 @@ export class CarnetsService {
     private prisma: PrismaService
   ) {}
 
-  create(Body:any) {
-    return this.prisma.carnets.create({
-      data:Body
+  async create(CarnetDto: CreateCarnetDto) {
+    //validacion logica de negocio
+    //el carnet ya existe?
+    //si existe error
+    let existe = await this.prisma.carnets .findFirst({
+      where:{estado:CarnetDto.estado}
     })
+if(existe){//error}
+    throw new HttpException({
+    "exito":false,
+    "mensaje":"El carnet ya existe"
+  }, 404); 
+}else{//no existe el canet, se puede crear
+   return await this.prisma.carnets.create({
+      data: {
+        estado: CarnetDto.estado
+      }
+    })
+}
+  
   }
 
   findAll() {

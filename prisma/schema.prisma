@@ -10,8 +10,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:.dev.db"
 }
 
 model carnets {
@@ -27,4 +27,23 @@ model vendedores {
   contraseña String
   carnet_id Int 
   carnet carnets @relation(fields: [carnet_id], references:[id])
+}
+
+
+
+//Modelos de autenticacion
+
+model estado {
+  id Int @id @default(autoincrement())
+  estado String
+  usuarios usuarios []
+}
+
+model usuarios {
+ id Int @id @default(autoincrement())
+ username String @unique
+ email String @unique
+ password String 
+ estado_id Int
+  estado estado @relation(fields: [estado_id], references:[id])
 }

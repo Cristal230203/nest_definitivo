@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Patch, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Body } from '@nestjs/common';
+import { VendedoresService } from './vendedores.service';
+import { CreateVendedoresDto } from './dto/create-vendedores.dto';
 
 
 @Controller("vendedores")
 export class VendedoresController {
-
+constructor(private readonly vendedoresService: VendedoresService){}
 
 //endpoint:
 //destino de la request
@@ -23,14 +25,12 @@ export class VendedoresController {
     return `Aqui se va a consultar el vendedor con id: ${id}`
     }
 
-  @Post()
-  insertarVendedor(): string {
-    return "Aqui se podrá crear los vendedores"
-  }
+ 
+    
 
-    @Post (":id")
-    insertarVendedorporId(@Param("id") id:string){
-      return `Aqui se va a insertar el vendedor con id: ${id}`
+    @Post()
+      create(@Body() VendedoresDto:CreateVendedoresDto) {
+        return this.vendedoresService.create (VendedoresDto);
       }
 
   @Patch ()

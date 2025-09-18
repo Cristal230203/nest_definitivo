@@ -1,1 +1,6 @@
-export class CreateCarnetDto {}
+export class CreateCarnetDto {
+
+    estado: boolean;
+    
+}
+

@@ -8,8 +8,8 @@ export class CarnetsController {
   constructor(private readonly carnetsService: CarnetsService) {}
 
   @Post()
-  create(@Body() Body:any) {
-    return this.carnetsService.create (Body);
+  create(@Body() CarnetDto:CreateCarnetDto) {
+    return this.carnetsService.create (CarnetDto);
   }
 
   @Get()
