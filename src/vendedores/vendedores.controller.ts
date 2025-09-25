@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Body, UsePipes, ValidationPipe } from '@nestjs/common';
 import { VendedoresService } from './vendedores.service';
 import { CreateVendedoresDto } from './dto/create-vendedores.dto';
 
@@ -29,7 +29,8 @@ constructor(private readonly vendedoresService: VendedoresService){}
     
 
     @Post()
-      create(@Body() VendedoresDto:CreateVendedoresDto) {
+    @UsePipes(new ValidationPipe( )  )
+      create(@Body() VendedoresDto:CreateVendedoresDto ) {
         return this.vendedoresService.create (VendedoresDto);
       }
 
