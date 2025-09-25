@@ -25,9 +25,6 @@ constructor(private readonly vendedoresService: VendedoresService){}
     return `Aqui se va a consultar el vendedor con id: ${id}`
     }
 
- 
-    
-
     @Post()
     @UsePipes(new ValidationPipe( )  )
       create(@Body() VendedoresDto:CreateVendedoresDto ) {
